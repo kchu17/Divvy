@@ -45,7 +45,7 @@ module_function
 		true
 	end
 
-	def add group_id, user_id
+	def add_user group_id, user_id
 		return [404, 'User not found'] unless User::exist? user_id
 		group = Database::get(GROUP, group_id) or return [404, 'Group not found']
 		
@@ -55,6 +55,17 @@ module_function
 		Database::put GROUP, group_id, group
 	
 		puts "[LOG] Added user to group. user_id=#{user_id}, group_id=#{group_id}" if $DEBUG
+		true
+	end
+
+	def remove_user group_id, user_id
+		group = Database::get(GROUP, group_id) or return [404, 'Group not found']
+		
+		return [200, "User isn't in the group"] unless group['users']&.include? user_id
+		group['users'].delete user_id
+		Database::put GROUP, group_id, group
+	
+		puts "[LOG] Removed user from group. user_id=#{user_id}, group_id=#{group_id}" if $DEBUG
 		true
 	end
 end

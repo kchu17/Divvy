@@ -42,9 +42,9 @@ delete '/group/:id' do
 end
 
 put '/group/:id/add' do
-	user_id = params['user'] or halt 400, "Missing the 'user' query field"
+	user_id = params['user_id'] or halt 400, "Missing the 'user_id' param field"
 	group_id = params['id']
-	result = Group::add group_id, user_id
+	result = Group::add_user group_id, user_id
 
 	if result == true
 		status 200
@@ -54,3 +54,15 @@ put '/group/:id/add' do
 	end
 end
 
+put '/group/:id/remove' do
+	user_id = params['user_id'] or halt 400, "Missing the 'user_id' param field"
+	group_id = params['id']
+	result = Group::remove_user group_id, user_id
+
+	if result == true
+		status 200
+		body 'Removed'
+	else
+		result
+	end
+end
