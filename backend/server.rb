@@ -9,5 +9,5 @@ error do
 	json error: true, cause: 'Internal Server Error'
 end
 
-require_relative 'users'
-require_relative 'groups'
+require_relative 'routes/users'
+require_relative 'routes/groups'

@@ -12,8 +12,13 @@ module_function
 	end
 
 	def put database, document, data
-		data.update get database, document
-		curl "#{database}/#{document}", PUT, data
+		data.delete '_id'
+		data.delete '_rev'
+
+		response = get database, document
+		response.update data
+
+		curl "#{database}/#{document}", PUT, response
 	end
 
 	def get database, document
