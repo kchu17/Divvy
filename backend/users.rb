@@ -54,10 +54,8 @@ end
 
 delete '/users/:id' do
 	response = Database::delete 'users', params['id']
-	p response
+	puts "[LOG] User deleted. response=#{response}, id=#{id}" if $DEBUG
+
 	status 200
 	body 'Deleted'
-	# body 'hi'
-	# p methods - Object.new.methods
-	# exit
 end
