@@ -17,7 +17,9 @@ module_function
 	end
 
 	def get database, document
-		curl "#{database}/#{document}", GET
+		result = curl "#{database}/#{document}", GET
+		return if result['error'] == 'not_found'
+		result
 	rescue JSON::ParserError
 		raise DatabaseError, raw
 	end

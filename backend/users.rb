@@ -3,49 +3,62 @@ require 'sinatra/json'
 
 require_relative 'database'
 
+USERS = 'users'
+
+module User
+	module_function
+
+	def get id
+		user = Database::get(USERS, id) or return
+
+		user.delete '_id'
+		user.delete '_rev'
+
+		user
+	end
+
+	def post data
+		result = Database::post USERS, data
+
+		puts "[LOG] New user created. result=#{result}, data=#{data}" if $DEBUG
+
+		result.delete 'ok'
+		result.delete 'rev'
+
+		result
+	end
+end
 
 get '/users/:id' do
-	data = Database::get 'users', params['id']
-	
-	return status 404 if data['error'] == 'not_found'
-
-	data.delete '_id'
-	data.delete '_rev'
-
-	json data
+	user = User::get(params['id']) or return status 404
+	json user
 end
 
 post '/users' do 
 	begin
-		body = JSON.parse raw = request.body.read
-	rescue JSON::ParseError
+		data = JSON.parse raw = request.body.read
+	rescue JSON::ParserError
 		status 400
 		json error: true, cause: 'Bad Body', raw: raw
 	end
 
-	response = Database::post 'users', body
-
-	puts "[LOG] New user created. response=#{response}, body=#{body}" if $DEBUG
-
-	response.delete 'ok'
-	response.delete 'rev'
-
+	result = User::post data
 	status 201
-	json response
+	json result
 end
 
 
 put '/users/:id' do 
 	begin
-		body = JSON.parse raw = request.body.read
-	rescue JSON::ParseError
+		updates = JSON.parse raw = request.body.read
+	rescue JSON::ParserError
 		status 400
 		json error: true, cause: 'Bad Body', raw: raw
 	end
 
-	response = Database::put 'users', params['id'], body
+	result = Database::put USERS, params['id'], updates
 
-	puts "[LOG] User Updated. response=#{response}, body=#{body}" if $DEBUG
+	puts "[LOG] User Updated. result=#{result}, updates=#{updates}" if $DEBUG
 
 	status 200
 	body 'Updated'
@@ -53,8 +66,8 @@ end
 
 
 delete '/users/:id' do
-	response = Database::delete 'users', params['id']
-	puts "[LOG] User deleted. response=#{response}, id=#{id}" if $DEBUG
+	result = Database::delete USERS, params['id']
+	puts "[LOG] User deleted. result=#{result}, id=#{id}" if $DEBUG
 
 	status 200
 	body 'Deleted'
