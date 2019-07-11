@@ -1,6 +1,5 @@
 require 'sinatra'
 require 'sinatra/json'
-require 'redis'
 require 'digest'
 require_relative '../user'
 
@@ -12,6 +11,17 @@ class String
 		Digest::SHA2.hexdigest salt + '$' + self
 	end
 end
+
+# def validate_user_params params
+# 	return {
+# 		username: params['username'] or return nil,
+# 		password: params['password'] or return nil,
+# 		email: params['email'] or return nil,
+# 		venmo: params['venmo'],
+# 		home_addres: params['home_addres'],
+# 		work_address: params['work_address'],
+# 	}
+# end
 
 get '/auth' do
 	body session.to_hash.to_s
@@ -59,6 +69,7 @@ post '/auth/register' do
 	end
 
 	salt = rand(0xffff).to_s # generate a two-byte salt
+
 	user = params.clone.update(
 		username: username,
 		password: password.hash_password(salt),
