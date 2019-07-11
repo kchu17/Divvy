@@ -12,15 +12,15 @@ class Document
 		@data['id']
 	end
 
-	def delete
-		result = Database::delete(table_name, id) or return
+	def delete!
+		result = self.class.db_delete(id) or return
 		puts "[LOG] #{self.class.name} deleted. result=#{result}, id=#{id}" if $DEBUG
 		@data = nil
 		true
 	end
 
-	def update updates
-		@data.update updates
+	def update! updates=nil
+		@data.update updates if updates
 		result = self.class.db_put id, @data
 
 		puts "[LOG] Updated user. result=#{result}, updates=#{updates}" if $DEBUG
@@ -35,9 +35,8 @@ class Document
 		@data[val]
 	end
 
-	def to_h
-		@data.clone
-	end
+	def to_h; @data.clone end
+	def to_json *a; @data.to_json *a end
 end
 
 
@@ -78,6 +77,10 @@ class << Document
 
 		data = Database::curl(table_name + '/_find', Database::POST, query)['docs']
 		data.map(&method(:standardize_doc))
+	end
+
+	def db_delete id
+		Database::delete table_name, id
 	end
 
 	def db_get id

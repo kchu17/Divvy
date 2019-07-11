@@ -1,68 +1,59 @@
-require_relative '../group'
+require_relative '../classes/group'
+require_relative 'util'
 require 'sinatra'
 require 'sinatra/json'
 
-get '/group/:id' do
-	group = Group::get(params['id']) or return status 404
+get '/groups/:id' do
+	group = Group::from_id(params['id']) or return GROUP_DOESNT_EXIST
 	json group
 end
 
-post '/group' do 
-	begin
-		data = JSON.parse(raw = request.body.read) or fail JSON::ParserError # just to break into rescue
-	rescue JSON::ParserError
-		status 400
-		return json ok: false, cause: 'Bad Body', raw: raw
-	end
+post '/groups' do 
+	data = parse_body(request.body.read){ |err| return err }
+	group = Group::create data
 
-	result = Group::post data
 	status 201
-	json result
+	json ok: true, id: group.id
 end
 
-put '/group/:id' do 
-	begin
-		updates = JSON.parse(raw = request.body.read) or fail JSON::ParserError # just to break into rescue
-	rescue JSON::ParserError
-		status 400
-		return json ok: false, cause: 'Bad Body', raw: raw
-	end
+put '/groups/:id' do 
+	group = Group::from_id(params['id']) or return GROUP_DOESNT_EXIST
 
-	Group::put params['id'], updates
+	data = parse_body(request.body.read){ |err| return err }
+
+	group.update! data or return
 
 	status 200
-	body 'Updated'
+	json ok: true
 end
 
-delete '/group/:id' do
-	Group::delete params['id']
+delete '/groups/:id' do
+	Group::delete! params['id']
 
 	status 200
-	body 'Deleted'
+	json ok: true
 end
 
-put '/group/:id/add' do
-	user_id = params['user_id'] or halt 400, "Missing the 'user_id' param field"
-	group_id = params['id']
-	result = Group::add_user group_id, user_id
+post '/groups/:id/add_user' do
+	user = User::from_id(params['user_id'] || halt(400, "Missing the 'user_id' params field")) or return USER_DOESNT_EXIST
+	group = Group::from_id(params['id']) or return GROUP_DOESNT_EXIST
 
-	if result == true
-		status 200
-		body 'Added'
-	else
+	result = group.add_user user
+	if result.is_a? Array
 		result
+	else
+		[200, {ok: true}.to_json]
 	end
 end
 
-put '/group/:id/remove' do
-	user_id = params['user_id'] or halt 400, "Missing the 'user_id' param field"
-	group_id = params['id']
-	result = Group::remove_user group_id, user_id
+post '/groups/:id/remove_user' do
+	user = User::from_id(params['user_id'] || halt(400, "Missing the 'user_id' params field")) or return USER_DOESNT_EXIST
+	group = Group::from_id(params['id']) or return GROUP_DOESNT_EXIST
 
-	if result == true
-		status 200
-		body 'Removed'
-	else
+	result = group.remove_user user
+	if result.is_a? Array
 		result
+	else
+		[200, {ok: true}.to_json]
 	end
 end

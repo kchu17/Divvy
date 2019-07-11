@@ -1,4 +1,4 @@
-require_relative 'documents'
+require_relative 'document'
 
 class String
 	def salt_password
@@ -18,7 +18,7 @@ class User < Document
 		@data['username']
 	end
 
-	def update updates
+	def update! updates
 		updates.delete 'salt'
 		if updates.include? 'password'
 			salt, password = updates['password'].salt_password

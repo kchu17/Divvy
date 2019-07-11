@@ -23,12 +23,12 @@ get '/auth' do
 end
 
 post '/auth/login' do
-	halt 400, 'Already logged in' if session.include? USER_ID
+	return [400, {ok: false, cause: 'Already logged in'}.to_json] if session.include? USER_ID
 
-	body = parse_body(request.body.read) or return
+	data = parse_body(request.body.read){ |err| return err }
 
-	username = body['username']&.to_s or halt 400, "'username' required"
-	password = body['password']&.to_s or halt 400, "'password' required"
+	username = data['username']&.to_s or halt 400, "'username' required"
+	password = data['password']&.to_s or halt 400, "'password' required"
 
 	user = User::from_username username
 
@@ -44,10 +44,10 @@ post '/auth/login' do
 end
 
 post '/auth/register' do
-	body = parse_body(request.body.read) or return
+	data = parse_body(request.body.read){ |err| return err }
 
-	username = body['username']&.to_s or halt 400, "'username' required"
-	password = body['password']&.to_s or halt 400, "'password' required"
+	username = data['username']&.to_s or halt 400, "'username' required"
+	password = data['password']&.to_s or halt 400, "'password' required"
 
 	if User::username_exists? username
 		status 400
@@ -56,18 +56,19 @@ post '/auth/register' do
 
 	salt, password = password.salt_password
 
-	user = body.clone
-	user.update(username: username, password: password, salt: salt)
+	user = data.clone
+	user.update username: username, password: password, salt: salt
 
 	id = User::create(user).id
 	session[USER_ID] = id
 
-	status 200
+	status 201
 	json ok: true, id: id
 end
 
 get '/auth/logout' do
+	return [200, {ok: true, comment: "You werent logged in"}.to_json] unless session.include? USER_ID
 	session.delete USER_ID
 	status 200
-	body 'Logged out'
+	json ok: true
 end
