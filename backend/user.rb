@@ -1,6 +1,8 @@
 require_relative 'database'
 
-module User
+
+#ed7f4acaa55c949d92408178ffe06fa0
+module User__
 module_function
 
 	USERS = 'users'
@@ -37,13 +39,13 @@ module_function
 	def put id, updates
 		result = Database::put USERS, id, updates
 
-		puts "[LOG] User Updated. result=#{result}, updates=#{updates}" if $DEBUG
+		puts "[LOG] User__ Updated. result=#{result}, updates=#{updates}" if $DEBUG
 		true
 	end
 
 	def delete id
-		result = Database::delete USERS, params['id']
-		puts "[LOG] User deleted. result=#{result}, id=#{id}" if $DEBUG
+		result = Database::delete(USERS, id) or return
+		puts "[LOG] User__ deleted. result=#{result}, id=#{id}" if $DEBUG
 		true
 	end
 end

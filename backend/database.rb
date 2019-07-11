@@ -30,7 +30,7 @@ module_function
 	end
 
 	def delete database, document
-		rev = get(database, document)['_rev']
+		rev = (get(database, document) or return)['_rev']
 		curl "#{database}/#{document}?rev=#{rev}", DELETE
 	end
 

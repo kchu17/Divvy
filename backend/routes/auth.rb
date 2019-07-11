@@ -37,10 +37,10 @@ post '/auth/login' do
 		return json ok: false, cause: 'Bad Body', raw: raw
 	end
 
-	username = body['username']&.to_s or halt 400, 'Username required'
+	username = body['username']&.to_s or halt 400, 'User__name required'
 	password = body['password']&.to_s or halt 400, 'Password required'
 
-	users = User::find({ selector: { username: 'sam' }, fields: ['password', 'salt', '_id']})
+	users = User__::find({ selector: { username: 'sam' }, fields: ['password', 'salt', '_id']})
 		.select{|user| user['password'] == password.hash_password(user['salt']) }
 
 	return [400, {ok: false, cause: "Bad Credentials"}.to_json] if users.empty?
@@ -60,23 +60,24 @@ post '/auth/register' do
 		return json ok: false, cause: 'Bad Body', raw: raw
 	end
 
-	username = body['username']&.to_s or halt 400, 'Username required'
+	username = body['username']&.to_s or halt 400, 'User__name required'
 	password = body['password']&.to_s or halt 400, 'Password required'
 
-	if User::exist? username
+	if User__::exist? username
 		status 400
-		return json ok: false, cause: "Username already exists", username: username
+		return json ok: false, cause: "User__name already exists", username: username
 	end
 
 	salt = rand(0xffff).to_s # generate a two-byte salt
 
-	user = params.clone.update(
+	user = body.clone
+	user.update(
 		username: username,
 		password: password.hash_password(salt),
 		salt: salt
 	)
 
-	id = User::post(user)['id']
+	id = User__::post(user)['id']
 	session[USER_ID] = id
 
 	status 200

@@ -22,6 +22,10 @@ module_function
 		group
 	end
 
+	def find body
+		Database::curl(GROUPS + '/_find', Database::POST, body)['docs']
+	end
+
 	def post data
 		result = Database::post GROUP, data
 
@@ -40,17 +44,17 @@ module_function
 	end
 
 	def delete id
-		result = Database::delete GROUP, params['id']
+		result = Database::delete GROUP, id
 		puts "[LOG] Group deleted. result=#{result}, id=#{id}" if $DEBUG
 		true
 	end
 
 	def add_user group_id, user_id
-		return [404, 'User not found'] unless User::exist? user_id
+		return [404, 'User__ not found'] unless User__::exist? user_id
 		group = Database::get(GROUP, group_id) or return [404, 'Group not found']
 		
 		group['users'] ||= []
-		return [200, 'User already in group, nothing added'] if group['users'].include? user_id
+		return [200, 'User__ already in group, nothing added'] if group['users'].include? user_id
 		group['users'].push user_id 
 		Database::put GROUP, group_id, group
 	
@@ -61,7 +65,7 @@ module_function
 	def remove_user group_id, user_id
 		group = Database::get(GROUP, group_id) or return [404, 'Group not found']
 		
-		return [200, "User isn't in the group"] unless group['users']&.include? user_id
+		return [200, "User__ isn't in the group"] unless group['users']&.include? user_id
 		group['users'].delete user_id
 		Database::put GROUP, group_id, group
 	
