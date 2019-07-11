@@ -6,11 +6,51 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import SearchScreen from '../screens/SearchScreen';
+import MyRideScreen from "../screens/MyRideScreen";
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
   default: {},
 });
+
+const MyRideStack = createStackNavigator(
+  {
+    MyRide: MyRideScreen,
+  },
+  config
+);
+
+MyRideStack.navigationOptions = {
+  tabBarLabel: "My Ride",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={ 'md-information-circle' }
+    />
+  ),
+};
+
+MyRideStack.path = '';
+
+const SearchStack = createStackNavigator(
+  {
+    Search: SearchScreen,
+  },
+  config
+);
+
+SearchStack.navigationOptions = {
+  tabBarLabel: 'Search',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={ 'md-information-circle' }
+    />
+  ),
+};
+
+SearchStack.path = '';
 
 const HomeStack = createStackNavigator(
   {
@@ -68,9 +108,11 @@ SettingsStack.navigationOptions = {
 SettingsStack.path = '';
 
 const tabNavigator = createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
-  SettingsStack,
+	// HomeStack,
+	MyRideStack,
+	LinksStack,
+	SettingsStack,
+	SearchStack
 });
 
 tabNavigator.path = '';
