@@ -11,3 +11,4 @@ end
 
 require_relative 'routes/users'
 require_relative 'routes/groups'
+require_relative 'routes/auth'

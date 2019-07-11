@@ -19,12 +19,16 @@ module_function
 		user
 	end
 
+	def find body
+		Database::curl(USERS + '/_find', Database::POST, body)['docs']
+	end
+
+
 	def post data
 		result = Database::post USERS, data
 
 		puts "[LOG] New user created. result=#{result}, data=#{data}" if $DEBUG
 
-		result.delete 'ok'
 		result.delete 'rev'
 
 		result

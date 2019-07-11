@@ -21,8 +21,8 @@ module_function
 		curl "#{database}/#{document}", PUT, response
 	end
 
-	def get database, document
-		result = curl "#{database}/#{document}", GET
+	def get database, document, data=nil
+		result = curl "#{database}/#{document}", GET, data
 		return if result['error'] == 'not_found'
 		result
 	rescue JSON::ParserError
@@ -37,7 +37,7 @@ module_function
 
 	GET, PUT, POST, DELETE = %w(GET PUT POST DELETE)
 
-	private_class_method def curl endpoint, meth, data=nil
+	def curl endpoint, meth, data=nil
 		data &&= "-d '#{data.to_json}'"
 		header = data && '-H "Content-type: application/json"'
 		JSON.parse raw = `curl -s -X#{meth} #{header} #{data} #{URL}/#{endpoint}`
