@@ -1,4 +1,3 @@
-__END__
 require 'uri'
 require 'json'
 
@@ -26,7 +25,7 @@ end
 
 args = {
 	units: 'imperial',
-	origins: [37.275167,-121.891223], #mexico lindo
+	origins: [[37.275167,-121.891223]], #mexico lindo
 	key: API_KEY,
 	destinations: [
 		[37.335240,-121.892711], # nick the greek
