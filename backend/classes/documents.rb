@@ -47,7 +47,7 @@ class << Document
 		const_get :TABLE
 	end
 
-	def exists? id:
+	def exists? id
 		!!from_id(id)
 	end
 

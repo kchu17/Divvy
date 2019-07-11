@@ -1,4 +1,3 @@
-require_relative '../user'
 require_relative '../classes/user'
 require 'sinatra'
 require 'sinatra/json'
@@ -35,7 +34,7 @@ end
 
 
 delete '/user/:id' do
-	User__::delete(params['id']) or return 404
+	User::delete(params['id']) or return 404
 
 	status 200
 	body 'Deleted'

@@ -1,7 +1,6 @@
 require 'sinatra'
 require 'sinatra/json'
 require 'digest'
-require_relative '../user'
 require_relative '../classes/user'
 require_relative 'util'
 enable :sessions
