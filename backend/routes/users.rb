@@ -12,7 +12,7 @@ post '/user' do
 		data = JSON.parse(raw = request.body.read) or fail JSON::ParserError # just to break into rescue
 	rescue JSON::ParserError
 		status 400
-		return json error: true, cause: 'Bad Body', raw: raw
+		return json ok: false, cause: 'Bad Body', raw: raw
 	end
 
 	result = User::post data
@@ -26,7 +26,7 @@ put '/user/:id' do
 		updates = JSON.parse(raw = request.body.read) or fail JSON::ParserError # just to break into rescue
 	rescue JSON::ParserError
 		status 400
-		return json error: true, cause: 'Bad Body', raw: raw
+		return json ok: false, cause: 'Bad Body', raw: raw
 	end
 
 	User::put params['id'], updates

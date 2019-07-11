@@ -34,7 +34,7 @@ post '/auth/login' do
 		body = JSON.parse(raw = request.body.read) or fail JSON::ParserError # just to break into rescue
 	rescue JSON::ParserError
 		status 400
-		return json error: true, cause: 'Bad Body', raw: raw
+		return json ok: false, cause: 'Bad Body', raw: raw
 	end
 
 	username = body['username']&.to_s or halt 400, 'Username required'
@@ -43,7 +43,7 @@ post '/auth/login' do
 	users = User::find({ selector: { username: 'sam' }, fields: ['password', 'salt', '_id']})
 		.select{|user| user['password'] == password.hash_password(user['salt']) }
 
-	return [400, {success: false, cause: "Bad Credentials"}.to_json] if users.empty?
+	return [400, {ok: false, cause: "Bad Credentials"}.to_json] if users.empty?
 	warn "Multiple users found, using the first one. username=#{username}, users=#{users}" if users.length > 1
 
 	session[USER_ID] = users.first['_id']
@@ -57,7 +57,7 @@ post '/auth/register' do
 		body = JSON.parse(raw = request.body.read) or fail JSON::ParserError # just to break into rescue
 	rescue JSON::ParserError
 		status 400
-		return json error: true, cause: 'Bad Body', raw: raw
+		return json ok: false, cause: 'Bad Body', raw: raw
 	end
 
 	username = body['username']&.to_s or halt 400, 'Username required'
@@ -65,7 +65,7 @@ post '/auth/register' do
 
 	if User::exist? username
 		status 400
-		return json success: false, cause: "Username already exists", username: username
+		return json ok: false, cause: "Username already exists", username: username
 	end
 
 	salt = rand(0xffff).to_s # generate a two-byte salt
@@ -80,7 +80,7 @@ post '/auth/register' do
 	session[USER_ID] = id
 
 	status 200
-	json success: true, id: id
+	json ok: true, id: id
 end
 
 get '/auth/logout' do
