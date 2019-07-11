@@ -2,7 +2,7 @@ require 'uri'
 require 'json'
 require_relative '../group'
 
-API_KEY = 'AIzaSyAxk8cjmtF9oJUngRMLKxsovb02XEwrEo4'
+API_KEY = open('api_key', &:read).trim
 BASE_URL = 'https://maps.googleapis.com/maps/api/distancematrix/json'
 
 class Object
@@ -23,10 +23,6 @@ class Hash
 	end
 end
 
-
-p Groups::
-
-# args = {
 # 	units: 'imperial',
 # 	origins: [[37.275167,-121.891223]], #mexico lindo
 # 	key: API_KEY,

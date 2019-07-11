@@ -21,11 +21,9 @@ class Documents
 		"#{self.class.name}(#{id}, #@data)"
 	end
 
-	def to_json *a
-		@data.to_json *a
+	def to_h
+		@data.clone
 	end
-
-	alias :to_json_for_user :to_json
 end
 
 

@@ -6,13 +6,6 @@ class User < Documents
 	def username
 		@data['username']
 	end
-
-	def to_json_for_user
-		data = @data.dup
-		data.delete 'password'
-		data.delete 'salt'
-		data
-	end
 end
 
 class << User

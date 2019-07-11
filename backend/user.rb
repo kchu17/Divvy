@@ -1,6 +1,5 @@
 require_relative 'database'
 
-
 #ed7f4acaa55c949d92408178ffe06fa0
 module User__
 module_function

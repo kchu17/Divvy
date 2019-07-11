@@ -3,38 +3,30 @@ require_relative '../classes/user'
 require 'sinatra'
 require 'sinatra/json'
 
+def sanitize_user user
+	user = user.to_h
+	user.delete 'password'
+	user.delete 'salt'
+	user
+end
+
 get '/user/:id' do
-	json (User::from_id(params['id']) or return status 404).to_json_for_user
+	user = User::from_id(params['id']) or return status 404
+	json sanitize_user user
 end
 
 get '/user/username/:username' do
-	json (User::from_username(params['username']) or return status 404).to_json_for_user
+	user = User::from_username(params['username']) or return status 404
+	json sanitize_user user
 end
 
-
-# post '/user' do 
-# 	begin
-# 		data = JSON.parse(raw = request.body.read) or fail JSON::ParserError # just to break into rescue
-# 	rescue JSON::ParserError
-# 		status 400
-# 		return json ok: false, cause: 'Bad Body', raw: raw
-# 	end
-
-# 	result = User__::post data
-# 	status 201
-# 	json result
-# end
-
+require_relative 'util'
 
 put '/user/:id' do 
-	begin
-		updates = JSON.parse(raw = request.body.read) or fail JSON::ParserError # just to break into rescue
-	rescue JSON::ParserError
-		status 400
-		return json ok: false, cause: 'Bad Body', raw: raw
-	end
+	updates = parse_body(request.body.read) or return
 
-	User__::put params['id'], updates
+	user = User::from_id(params['id']) or return status 404
+	user.update updates or return
 
 	status 200
 	body 'Updated'
