@@ -5,8 +5,9 @@ require 'sinatra/json'
 
 def sanitize_user user
 	user = user.to_h
-	user.delete 'password'
-	user.delete 'salt'
+	user['sanitized'] = true;
+	# user.delete 'password'
+	# user.delete 'salt'
 	user
 end
 

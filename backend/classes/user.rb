@@ -1,10 +1,31 @@
 require_relative 'documents'
 
-class User < Documents
+class String
+	def salt_password
+		salt = rand(0xffff).to_s
+		[salt, hash_password(salt)]
+	end
+
+	def hash_password salt
+		Digest::SHA2.hexdigest salt + '$' + self
+	end
+end
+
+class User < Document
 	TABLE = 'users'
 
 	def username
 		@data['username']
+	end
+
+	def update updates
+		updates.delete 'salt'
+		if updates.include? 'password'
+			salt, password = updates['password'].salt_password
+			updates['salt'] = salt
+			updates['password'] = updates['password'].hash_password updates['salt']
+		end
+		super(updates)
 	end
 end
 

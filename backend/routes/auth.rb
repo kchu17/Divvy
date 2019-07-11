@@ -2,15 +2,11 @@ require 'sinatra'
 require 'sinatra/json'
 require 'digest'
 require_relative '../user'
-
+require_relative '../classes/user'
+require_relative 'util'
 enable :sessions
 
 USER_ID = :user_id
-class String
-	def hash_password salt
-		Digest::SHA2.hexdigest salt + '$' + self
-	end
-end
 
 # def validate_user_params params
 # 	return {
@@ -30,54 +26,41 @@ end
 post '/auth/login' do
 	halt 400, 'Already logged in' if session.include? USER_ID
 
-	begin
-		body = JSON.parse(raw = request.body.read) or fail JSON::ParserError # just to break into rescue
-	rescue JSON::ParserError
+	body = parse_body(request.body.read) or return
+
+	username = body['username']&.to_s or halt 400, "'username' required"
+	password = body['password']&.to_s or halt 400, "'password' required"
+
+	user = User::from_username username
+
+	if !user || user['password'] != password.hash_password(user['salt'])
 		status 400
-		return json ok: false, cause: 'Bad Body', raw: raw
+		return json ok: false, cause: "Bad Credentials"
 	end
 
-	username = body['username']&.to_s or halt 400, 'User__name required'
-	password = body['password']&.to_s or halt 400, 'Password required'
-
-	users = User__::find({ selector: { username: 'sam' }, fields: ['password', 'salt', '_id']})
-		.select{|user| user['password'] == password.hash_password(user['salt']) }
-
-	return [400, {ok: false, cause: "Bad Credentials"}.to_json] if users.empty?
-	warn "Multiple users found, using the first one. username=#{username}, users=#{users}" if users.length > 1
-
-	session[USER_ID] = users.first['_id']
+	session[USER_ID] = user.id
 
 	status 200
-	body 'Logged in'
+	json ok: true
 end
 
 post '/auth/register' do
-	begin
-		body = JSON.parse(raw = request.body.read) or fail JSON::ParserError # just to break into rescue
-	rescue JSON::ParserError
+	body = parse_body(request.body.read) or return
+
+	username = body['username']&.to_s or halt 400, "'username' required"
+	password = body['password']&.to_s or halt 400, "'password' required"
+
+	if User::username_exists? username
 		status 400
-		return json ok: false, cause: 'Bad Body', raw: raw
+		return json ok: false, cause: "'username' already exists", username: username
 	end
 
-	username = body['username']&.to_s or halt 400, 'User__name required'
-	password = body['password']&.to_s or halt 400, 'Password required'
-
-	if User__::exist? username
-		status 400
-		return json ok: false, cause: "User__name already exists", username: username
-	end
-
-	salt = rand(0xffff).to_s # generate a two-byte salt
+	salt, password = password.salt_password
 
 	user = body.clone
-	user.update(
-		username: username,
-		password: password.hash_password(salt),
-		salt: salt
-	)
+	user.update(username: username, password: password, salt: salt)
 
-	id = User__::post(user)['id']
+	id = User::create(user).id
 	session[USER_ID] = id
 
 	status 200

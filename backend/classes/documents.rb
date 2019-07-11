@@ -1,6 +1,6 @@
 require_relative '../database'
 
-class Documents
+class Document
 	attr_reader :data
 
 	private def initialize data
@@ -8,7 +8,9 @@ class Documents
 		@data = data
 	end
 
-	def id; @data['id'] end
+	def id
+		@data['id']
+	end
 
 	def delete
 		result = Database::delete(table_name, id) or return
@@ -17,8 +19,20 @@ class Documents
 		true
 	end
 
+	def update updates
+		@data.update updates
+		result = self.class.db_put id, @data
+
+		puts "[LOG] Updated user. result=#{result}, updates=#{updates}" if $DEBUG
+		true
+	end
+
 	def inspect
 		"#{self.class.name}(#{id}, #@data)"
+	end
+
+	def [] val
+		@data[val]
 	end
 
 	def to_h
@@ -28,7 +42,7 @@ end
 
 
 
-class << Documents
+class << Document
 	def table_name
 		const_get :TABLE
 	end
@@ -41,7 +55,20 @@ class << Documents
 		new (db_get id or return)
 	end
 
-private
+	def create data
+		result = db_post data
+		puts "[LOG] New user created. result=#{result}, data=#{data}" if $DEBUG
+		from_id result['id']
+	end
+
+
+	def db_post data
+		Database::post table_name, data
+	end
+
+	def db_put id, data
+		Database::put table_name, id, data
+	end
 
 	def db_find selector=nil, fields=nil
 		query = {}
@@ -50,17 +77,19 @@ private
 		query['fields'] = fields if fields
 
 		data = Database::curl(table_name + '/_find', Database::POST, query)['docs']
-		data.map(&method(:sanitize_doc))
+		data.map(&method(:standardize_doc))
 	end
 
-	def sanitize_doc doc
+	def db_get id
+		return if id.nil? || id.empty?
+		data = Database::get(table_name, id) and standardize_doc data
+	end
+
+private
+	def standardize_doc doc
 		doc['id'] = doc.delete '_id'
 		doc.delete '_rev'
 		doc
 	end
 
-	def db_get id
-		return if id.nil? || id.empty?
-		data = Database::get(table_name, id) and sanitize_doc data
-	end
 end
