@@ -76,7 +76,6 @@ export default class SearchForGroup extends Component {
   render() {
     const header = (
       <View style={styles.header}>
-
         <BXXLText style={styles.headerText}>Searching for '{ this.state.searchQuery }'</BXXLText>
       </View>
     );
@@ -89,10 +88,10 @@ export default class SearchForGroup extends Component {
             <FlatList
               ListHeaderComponent={<BLText>Groups Found</BLText>}
               data={[
-                { id: 0, src: "IBM—SVL", dst: "Almaden", arrival: "5:00 pm" },
-                { id: 1, src: "IBM—SVL", dst: "Palo Alto", arrival: "6:30 pm" },
-                { id: 2, src: "IBM—SVL", dst: "Santa Clara", arrival: "5:45 pm" },
-                { id: 3, dst: "IBM—SVL", src: "Willow Glen, San Jose", arrival: "9:30 am" }
+                { key: "groupid0", id: 0, src: "IBM—SVL", dst: "Almaden", arrival: "5:00 pm" },
+                { key: "groupid1", id: 1, src: "IBM—SVL", dst: "Palo Alto", arrival: "6:30 pm" },
+                { key: "groupid2", id: 2, src: "IBM—SVL", dst: "Santa Clara", arrival: "5:45 pm" },
+                { key: "groupid3", id: 3, dst: "IBM—SVL", src: "Willow Glen, San Jose", arrival: "9:30 am" }
               ]}
               renderItem={({item}) => (
                 <SearchGroup key={item.id} {...item} navigation={this.props.navigation}/>
