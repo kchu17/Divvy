@@ -3,14 +3,32 @@ import {StyleSheet, Text, View, TextInput,TouchableOpacity} from 'react-native';
 
 
 
-export default class Form extends Component 
-{
+export default class Form extends Component {
+    state = {
+        username: '',
+        password: ''
+    };
+
+    getUsername = () => {
+        return this.state.username;
+    };
+
     render()
     {
         return(
             <View styles = {styles.container}>
-                 <TextInput style = {styles.inputBox} underlineColorAndroid = 'transparent' placeholder = "Username"/>
-                 <TextInput style = {styles.inputBox} underlineColorAndroid = 'transparent' placeholder = "Password"/>
+                 <TextInput 
+                    style={styles.inputBox} 
+                    value={this.state.username} 
+                    onChange={event => this.setState({ username: event.nativeEvent.text })}
+                    underlineColorAndroid = 'transparent' 
+                    placeholder = "Username"/>
+                 <TextInput 
+                    style = {styles.inputBox} 
+                    value={this.state.password} 
+                    onChange={event => this.setState({ password: event.target.value })}
+                    underlineColorAndroid = 'transparent' 
+                    placeholder = "Password"/>
                  <TouchableOpacity style = {styles.button}>
                      <Text style = {styles.buttonText}>{this.props.type}</Text>
                  </TouchableOpacity>

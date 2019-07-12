@@ -8,6 +8,7 @@ export default class SignUp extends Component
     render()
     {
         return(
+          <View>
          <ScrollView>
             <View styles = {styles.form}>
                 <Logo/>
@@ -28,13 +29,14 @@ export default class SignUp extends Component
                <View style = {styles.signupTextCont}>
                  <View style={styles.buttonContainer}>
                  <Button
-                 onPress={this._onPressButton}
+                 onPress={() => this.props.navigation.navigate('Login')}
                  title="Sign Up"
                  />
                  </View>
                </View>
             </View>
             </ScrollView>
+            </View>
         );
     }
 }

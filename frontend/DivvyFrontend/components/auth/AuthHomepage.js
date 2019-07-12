@@ -17,7 +17,9 @@ const styles = StyleSheet.create({
 export default function Homepage({ navigation }) {
   return (
     <View style={styles.container}>
-     <Logo/>
+     <View style = {styles.buttonContainer}>
+      <Logo/>
+      </View>
       <View style={styles.buttonContainer}>
         {<Button onPress={() => navigation.navigate('SignUp')} 
         title="Sign Up"/>}

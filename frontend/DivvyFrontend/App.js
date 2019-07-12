@@ -7,6 +7,10 @@ import SignUp from './components/auth/SignUp';
 import SearchForGroup from './components/hacks/SearchForGroup';
 import GroupDetailsScreen from './screens/GroupDetailsScreen';
 
+import {YellowBox} from 'react-native';
+YellowBox.ignoreWarnings(['Warning: ReactNative.createElement']);
+console.disableYellowBox = true; 
+
 const AppNavigator = createStackNavigator({
   Home: {screen: AuthHomepage},
   PostAuthHomepage: { screen: MyRide },

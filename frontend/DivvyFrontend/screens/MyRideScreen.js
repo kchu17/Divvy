@@ -70,7 +70,7 @@ export default class MyRideScreen extends Component {
 									profPicUrl: "https://catking.in/wp-content/uploads/2017/02/default-profile-1.png"
 								},
 								{ key: "May", pickedUp: true, isMe: false },
-								{ key: "Kevin", pickedUp: false, isMe: true },
+								{ key: "You", pickedUp: false, isMe: true },
 								{ key: "Sam", pickedUp: false, isMe: false }
 							]}
 							renderItem={({item}) => (

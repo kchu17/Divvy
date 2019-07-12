@@ -5,27 +5,34 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 import Logo from '../Logo';
 import Form from './Form';
 import MyRide from '../../MyRide.js'
+import { info } from '../../hacky.js'
 
-export default function Login({ navigation }) {
-  return(
-    <ScrollView>
-      <View styles = {styles.container}>
-         <Logo/>
-         <Form/>
-         <View style = {styles.signupTextCont}>
-           <View style={styles.buttonContainer}>
-           <Button
-           onPress={() => {
-              // navigation.popToTop();
-              navigation.navigate('MyRide')
-            }}
-           title="Log In"
-           />
+export default class Login extends Component {
+  formRef = React.createRef();
+  render() {
+    return(
+      <ScrollView>
+        <View styles = {styles.container}>
+           <View style = {styles.signupTextCont}>
+           <Logo/>
            </View>
-         </View>
-      </View>
-    </ScrollView>
-  );
+           <Form ref={this.formRef}/>
+           <View style = {styles.signupTextCont}>
+             <View style={styles.buttonContainer}>
+             <Button
+             onPress={() => {
+                info.username = this.formRef.current.getUsername();
+                // navigation.popToTop();
+                this.props.navigation.navigate('MyRide')
+              }}
+             title="Log In"
+             />
+             </View>
+           </View>
+        </View>
+      </ScrollView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

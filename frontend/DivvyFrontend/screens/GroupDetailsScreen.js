@@ -6,6 +6,8 @@ import {
 import { BXXLText, BXLText } from "../components/StyledText";
 import { Person } from "../components/Touchables.js";
 import { styles as tabScreenStyles } from "./TabScreenStyles";
+import { info } from "../hacky.js";
+import SearchForGroup from '../components/hacks/SearchForGroup';
 
 export default class GroupDetailsScreen extends Component {
 	static navigationOptions = { header: null };
@@ -15,6 +17,7 @@ export default class GroupDetailsScreen extends Component {
 		this.state = {
 			loading: true,
 			joinRequests: [],
+			oldusername: info.username
 		};
 	}
 
@@ -44,11 +47,11 @@ export default class GroupDetailsScreen extends Component {
 				},
 				{
 					key: "Tom",
-					isMe: true,
+					isMe: false,
 				},
 				{
-					key: "Kevin",
-					isMe: false,
+					key: "You",
+					isMe: true,
 				},
 				{
 					key: "Ryan",
@@ -63,10 +66,22 @@ export default class GroupDetailsScreen extends Component {
 	componentDidUpdate(prevProps, prevState) {
 		// this really shouldn't be here
 		// rather, this should be checked continuously throughout the application
+		console.log('x');
 		const oldJR = prevState.joinRequests;
 		const newJR = this.state.joinRequests;
+		console.log('y');
 		const diff = newJR.filter((jr) => oldJR.indexOf(jr) === -1);
-		if (diff.length > 0 && true) {
+		console.log('z');
+
+		console.log(JSON.stringify(info.username), JSON.stringify(this.state.oldusername));
+		console.log('w');
+
+		if (info.username !== this.state.oldusername) {
+			this.setState({ oldusername: info.username }, this.forceUpdate);
+			return;
+		}
+
+		if (diff.length > 0 && info.username === 'Samp') {
 			Alert.alert(
 				"New Join Request" + ((diff.length > 1) ? "s" : ""),
 				((diff.length > 1 ? diff.slice(0, -1).map((x) => x.key).join(", ") + ` and ${diff[diff.length - 1].key} want` : `${diff[0].key} wants`)) + ` to join ${this.state.groupName}!`,
@@ -123,6 +138,10 @@ export default class GroupDetailsScreen extends Component {
 
 
 	render() {
+		if (info.username !== 'Samp') {
+			return <SearchForGroup />;
+		}
+
 		const header = (
 			<View style={styles.header}>
 				<BXXLText style={styles.headerText}>{this.state.groupName}</BXXLText>
