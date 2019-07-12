@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         height: 40,
         marginBottom: 30,
-        color: '#fff',
+        color: '#000',
         borderBottomColor: '#f8f8f8',
         borderBottomWidth: 1,
     },
