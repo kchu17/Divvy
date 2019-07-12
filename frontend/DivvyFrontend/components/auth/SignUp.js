@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TextInput, TouchableOpacity, Button, ScrollView} from 'react-native';
 
-import Logo from './Logo';
+import Logo from '../Logo';
 
 export default class SignUp extends Component 
 {

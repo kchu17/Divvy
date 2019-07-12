@@ -1,12 +1,15 @@
 import { createStackNavigator, createAppContainer } from "react-navigation";
-import Login from './components/Login';
 import Logo from './components/Logo';
 import MyRide from './MyRide';
-import Homepage from './Homepage';
+import AuthHomepage from './components/auth/AuthHomepage';
+import Login from './components/auth/Login';
+import SignUp from './components/auth/SignUp';
 
 const AppNavigator = createStackNavigator({
-  Home: { screen: Homepage },
+  Home: { screen: AuthHomepage },
+  PostAuthHomepage: { screen: MyRide },
   Login: { screen: Login },
+  SignUp: { screen: SignUp },
   MyRide: { screen: MyRide },
 });
 
