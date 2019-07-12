@@ -4,7 +4,6 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 
 import Logo from '../Logo';
 import Form from './Form';
-import Schedule from '../Schedule';
 import MyRide from '../../MyRide.js'
 
 export default function Login({ navigation }) {
