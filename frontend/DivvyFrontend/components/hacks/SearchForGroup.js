@@ -10,12 +10,12 @@ import {
 import { Person, Ride } from "../Touchables";
 import { AntDesign } from '@expo/vector-icons';
 
-const axios = require("axios");
-import { DB_URL } from "./url_key";
+// const axios = require("axios");
+// import { DB_URL } from "./url_key";
 
 
 function alertOrDetails(props) {
-  if (false) {
+  if (true) {
     Alert.alert('Group Join Request Sent', `${props.src} -> ${props.dst}, arrive at ${props.arrival}`,
       [
         {text: 'OK', onPress: () => console.log('OK Pressed')},

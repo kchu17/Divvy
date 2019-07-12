@@ -66,7 +66,7 @@ export default class GroupDetailsScreen extends Component {
 		const oldJR = prevState.joinRequests;
 		const newJR = this.state.joinRequests;
 		const diff = newJR.filter((jr) => oldJR.indexOf(jr) === -1);
-		if (diff.length > 0 && false) {
+		if (diff.length > 0 && true) {
 			Alert.alert(
 				"New Join Request" + ((diff.length > 1) ? "s" : ""),
 				((diff.length > 1 ? diff.slice(0, -1).map((x) => x.key).join(", ") + ` and ${diff[diff.length - 1].key} want` : `${diff[0].key} wants`)) + ` to join ${this.state.groupName}!`,
