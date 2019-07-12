@@ -1,7 +1,19 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, StyleSheet, Image } from "react-native";
-import { LText } from "./StyledText.js"
+import { LText, MonoLText, BLText } from "./StyledText.js"
 import { AntDesign } from '@expo/vector-icons';
+
+export const Ride = (props) => (
+	<TouchableOpacity style={styles.rideSummary}>
+		<View style={styles.rideSummaryContent}>
+			<BLText>Scheduled time:</BLText>
+			<MonoLText style={styles.timeText}>7:45 AM ~ 8:40 AM</MonoLText>
+		</View>
+		<View style={styles.arrow}>
+			<AntDesign name="right" size={30} color="#aaaaaa" />
+		</View>
+	</TouchableOpacity>
+);
 
 export class Person extends Component {
 	constructor(props) {
@@ -68,5 +80,23 @@ const styles = StyleSheet.create({
 			justifyContent: "center",
 			alignItems: "center",
 		},
+
+	rideSummary: {
+		borderStyle: "solid",
+		borderWidth: 1,
+		borderRadius: 10,
+		padding: 10,
+		margin: 10,
+		flex: 1,
+		flexDirection: "row",
+		justifyContent: "center",
+		alignItems: "center",
+	},
+		rideSummaryContent: {
+			flex: 10,
+		},
+			timeText: {
+				textAlign: "center",
+			},
 });
 

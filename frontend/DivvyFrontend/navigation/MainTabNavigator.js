@@ -26,7 +26,7 @@ MyRideStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={ 'md-information-circle' }
+      name={ 'ios-car' }
     />
   ),
 };

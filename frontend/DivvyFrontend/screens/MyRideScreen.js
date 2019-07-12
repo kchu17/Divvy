@@ -6,7 +6,7 @@ import {
 import {
 	MonoText, LText, MonoLText, BLText, XLText, BXLText, XXLText, BXXLText
 } from "../components/StyledText";
-import { Person } from "../components/Touchables";
+import { Person, Ride } from "../components/Touchables";
 
 const axios = require("axios");
 const DB_URL = "http://ec2-18-219-137-171.us-east-2.compute.amazonaws.com:4567";
@@ -43,10 +43,15 @@ export default class MyRideScreen extends Component {
 					<BXLText>Today</BXLText>
 				</View>
 
+				{
+				/*
 				<TouchableOpacity style={styles.rideSummary}>
 					<BLText>Scheduled time:</BLText>
 					<MonoLText style={styles.timeText}>7:45 AM ~ 8:40 AM</MonoLText>
 				</TouchableOpacity>
+				*/
+				<Ride />
+				}
 
 				<View>
 					<View>
