@@ -1,5 +1,6 @@
 require_relative 'util'
 require_relative '../classes/user'
+require_relative '../classes/group'
 require 'sinatra'
 require 'sinatra/json'
 
@@ -15,6 +16,12 @@ get '/users/:id' do
 	user = User::from_id(params['id']) or return USER_DOESNT_EXIST
 	json sanitize_user user
 end
+
+get '/users/:id/find_groups' do
+	groups = Group::list_all or return json ok: false
+	json ok: true, groups: groups
+end
+
 
 get '/users/username/:username' do
 	user = User::from_username(params['username']) or return USER_DOESNT_EXIST

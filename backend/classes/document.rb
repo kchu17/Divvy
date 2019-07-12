@@ -60,6 +60,10 @@ class << Document
 		from_id result['id']
 	end
 
+	def list_all
+		all_docs = Database::get(table_name, '_all_docs') or return
+		all_docs['rows'].map{|row| row['id']}
+	end
 
 	def db_post data
 		Database::post table_name, data

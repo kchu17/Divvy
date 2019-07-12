@@ -25,7 +25,7 @@ class Group < Document
 		self['users'].delete user.id
 		update!
 
-		puts "[LOG] Removed user from group. user.id=#{user.id}, group__d=#{group__d}" if $DEBUG
+		puts "[LOG] Removed user from group. user.id=#{user.id}, group.id=#{group.id}" if $DEBUG
 		true
 	end
 end
