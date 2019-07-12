@@ -19,11 +19,30 @@ export default class Form extends Component
     }
 }
 
+// export default class Form extends Component 
+// {
+//     render()
+//     {
+//         return(
+//         <View style={styles.container}>
+//             <View style={styles.container}>
+//                 <TextInput style = {styles.container} underlineColorAndroid = 'transparent' placeholder = "Username"/>
+//             </View>
+//             <View style={styles.container}>
+//                 <TextInput style = {styles.container} underlineColorAndroid = 'transparent' placeholder = "Password"/>
+//             </View>
+//             <TouchableOpacity style = {styles.button}>
+//                       <Text style = {styles.buttonText}>{this.props.type}</Text>
+//             </TouchableOpacity>
+//         </View>
+//         );
+//     }
+// }
+
 const styles = StyleSheet.create({
     container: {
      flex: 1,
-     alignItems: 'center',
-     justifyContent: 'center',
+     justifyContent: 'flex-end',
      margin: 30,
     },
     inputBox:{
@@ -35,7 +54,9 @@ const styles = StyleSheet.create({
         fontSize: 16, 
         color: '#000000',
         borderColor: 'black',
-        marginVertical: 10
+        marginVertical: 25,
+        marginHorizontal: 50,
+        justifyContent: 'flex-end'
     },
     // button:
     // {

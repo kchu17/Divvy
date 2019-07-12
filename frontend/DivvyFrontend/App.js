@@ -7,7 +7,7 @@ import SignUp from './components/auth/SignUp';
 import SearchForGroup from './components/hacks/SearchForGroup';
 
 const AppNavigator = createStackNavigator({
-  Home: { screen: SearchForGroup /*AuthHomepage*/ },
+  Home: { screen: AuthHomepage},
   PostAuthHomepage: { screen: MyRide },
   Login: { screen: Login },
   SignUp: { screen: SignUp },

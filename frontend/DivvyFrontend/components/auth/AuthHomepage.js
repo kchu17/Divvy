@@ -10,11 +10,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     margin: 20
   },
-  alternativeLayoutButtonContainer: {
-    margin: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  }
 });
 
 // AppRegistry.registerComponent('App', () => App);
