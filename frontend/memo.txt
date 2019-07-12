@@ -1,0 +1,15 @@
+in Touchables.js
+<Person />
+<Ride />
+
+in MainTabNavigator.js
+change tabNavigator
+mimic existing code for othe tabs
+
+api calls: (ask sam) 
+axios.get(`${URL}/auth`)
+axios.post
+etc.
+
+mimic myridescreen.js for other tabs
+

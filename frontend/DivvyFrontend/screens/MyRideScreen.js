@@ -18,9 +18,10 @@ export default class MyRideScreen extends Component {
 		super(props);
 		this.state = {
 			loading: true,
+			ridePeople: []
 		};
-		// axios.get(`${DB_URL}/auth`)
-		// 	.then(console.log)
+		// axios.get(`${DB_URL}/rides/rideid123`)
+		// 	.then((res) => {this.setState(ridePeople: res.people);})
 		// 	.catch(console.log);
 	}
 
