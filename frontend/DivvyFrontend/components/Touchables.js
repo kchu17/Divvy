@@ -7,7 +7,7 @@ export const Ride = (props) => (
 	<TouchableOpacity style={styles.rideSummary}>
 		<View style={styles.rideSummaryContent}>
 			<BLText>Scheduled time:</BLText>
-			<MonoLText style={styles.timeText}>7:45 AM ~ 8:40 AM</MonoLText>
+			<MonoLText style={styles.timeText}>7:45 AM -> 8:40 AM</MonoLText>
 		</View>
 		<View style={styles.arrow}>
 			<AntDesign name="right" size={30} color="#aaaaaa" />

@@ -57,7 +57,7 @@ export default class MyRideScreen extends Component {
 				<View>
 					<View>
 						<BLText>Real-time ETA:</BLText>
-						<MonoLText style={styles.timeText}>7:50 AM ~ 8:50 AM</MonoLText>
+						<MonoLText style={styles.timeText}>7:50 AM -> 8:50 AM</MonoLText>
 					</View>
 					<View>
 						<FlatList
