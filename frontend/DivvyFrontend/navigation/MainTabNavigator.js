@@ -8,6 +8,7 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import SearchScreen from '../screens/SearchScreen';
 import MyRideScreen from "../screens/MyRideScreen";
+import SearchForGroup from "../components/hacks/SearchForGroup"
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -35,7 +36,7 @@ MyRideStack.path = '';
 
 const SearchStack = createStackNavigator(
   {
-    Search: SearchScreen,
+    Search: SearchForGroup,
   },
   config
 );
@@ -83,7 +84,8 @@ const LinksStack = createStackNavigator(
 );
 
 LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+  // tabBarLabel: 'Links',
+  tabBarLabel: "Groups",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
   ),
@@ -112,7 +114,8 @@ const tabNavigator = createBottomTabNavigator({
 	MyRideStack,
 	LinksStack,
 	SettingsStack,
-	SearchStack
+  SearchStack
+
 });
 
 tabNavigator.path = '';

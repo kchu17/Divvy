@@ -12,6 +12,7 @@ const AppNavigator = createStackNavigator({
   Login: { screen: Login },
   SignUp: { screen: SignUp },
   MyRide: { screen: MyRide },
+  SearchForGroup: { screen: SearchForGroup}
 });
 
 export default createAppContainer(AppNavigator);
