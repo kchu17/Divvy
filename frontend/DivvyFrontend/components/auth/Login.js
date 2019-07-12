@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Button, ScrollView} from 'react-native';
 import { createStackNavigator, createAppContainer } from "react-navigation";
 
 import Logo from '../Logo';
@@ -9,6 +9,7 @@ import MyRide from '../../MyRide.js'
 
 export default function Login({ navigation }) {
   return(
+    <ScrollView>
       <View styles = {styles.container}>
          <Logo/>
          <Form/>
@@ -24,6 +25,7 @@ export default function Login({ navigation }) {
            </View>
          </View>
       </View>
+    </ScrollView>
   );
 }
 
