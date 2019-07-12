@@ -12,7 +12,7 @@ export const LText = (props) => (
 );
 
 export const MonoLText = (props) => (
-	<Text {...props} style={[{ fontSize: 20 , fontFamily: 'monospace' }, props.style]} />
+	<Text {...props} style={[{ fontSize: 20 , fontFamily: 'space-mono' }, props.style]} />
 );
 
 export const BLText = (props) => (
