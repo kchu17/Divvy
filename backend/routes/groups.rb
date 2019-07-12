@@ -8,6 +8,11 @@ get '/groups/:id' do
 	json group
 end
 
+get '/groups' do
+	groups = Group::list_all or return
+	json groups: groups
+end
+
 post '/groups' do 
 	data = parse_body(request.body.read){ |err| return err }
 	group = Group::create data

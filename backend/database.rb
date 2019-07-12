@@ -44,4 +44,3 @@ module_function
 	end
 end
 
-# p Database::curl 'rides', 'PUT'
