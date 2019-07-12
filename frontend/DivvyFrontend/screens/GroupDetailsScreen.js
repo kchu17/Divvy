@@ -47,7 +47,7 @@ export default class GroupDetailsScreen extends Component {
 					isMe: true,
 				},
 				{
-					key: "Kevim",
+					key: "Kevin",
 					isMe: false,
 				},
 				{
