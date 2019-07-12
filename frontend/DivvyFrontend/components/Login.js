@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
-
+import { createStackNavigator, createAppContainer } from "react-navigation";
 
 import Logo from './Logo';
 import Form from './Form';
+import Schedule from './Schedule';
 
 export default class Login extends Component 
 {
@@ -16,8 +17,8 @@ export default class Login extends Component
                <View style = {styles.signupTextCont}>
                  <View style={styles.buttonContainer}>
                  <Button
-                 onPress={this._onPressButton}
-                 title="Login"
+                 onPress={() => this.props.navigation.navigate('Schedule')}
+                 title="Log In"
                  />
                  </View>
                </View>
@@ -43,3 +44,11 @@ const styles = StyleSheet.create({
         margin: 20
     }
   });
+
+  // const AppNavigator = createStackNavigator({
+  //   Schedule: {
+  //     screen: Schedule
+  //   }
+  // });
+  
+  // export default createAppContainer(AppNavigator);

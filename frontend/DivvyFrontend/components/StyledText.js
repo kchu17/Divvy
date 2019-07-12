@@ -8,30 +8,30 @@ export function MonoText(props) {
 }
 
 export const LText = (props) => (
-	<Text {...props} style={[{ fontSize: 20 }, props.style]} />
+	<Text {...props} style={[{ fontSize: 20, color: "#3d7080" }, props.style]} />
 );
 
 export const MonoLText = (props) => (
-	<Text {...props} style={[{ fontSize: 20 /*, fontFamily: 'monospace, monospace' */}, props.style]} />
+	<LText {...props} style={[{ fontFamily: 'space-mono' }, props.style]} />
 );
 
 export const BLText = (props) => (
-	<Text {...props} style={[{ fontSize: 20, fontWeight: "bold" }, props.style]} />
+	<LText {...props} style={[{ fontWeight: "bold" }, props.style]} />
 );
 
 export const XLText = (props) => (
-	<Text {...props} style={[{ fontSize: 25 }, props.style]} />
+	<LText {...props} style={[{ fontSize: 25 }, props.style]} />
 );
 
 export const BXLText = (props) => (
-	<Text {...props} style={[{ fontSize: 25, fontWeight: "bold" }, props.style]} />
+	<XLText {...props} style={[{ fontWeight: "bold" }, props.style]} />
 );
 
 export const XXLText = (props) => (
-	<Text {...props} style={[{ fontSize: 30 }, props.style]} />
+	<LText {...props} style={[{ fontSize: 30 }, props.style]} />
 );
 
 export const BXXLText = (props) => (
-	<Text {...props} style={[{ fontSize: 30, fontWeight: "bold" }, props.style]} />
+	<XXLText {...props} style={[{ fontSize: 30, fontWeight: "bold" }, props.style]} />
 );
 
