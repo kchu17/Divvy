@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
 
 
 import Logo from './Logo';
@@ -14,7 +14,12 @@ export default class Login extends Component
                <Logo/>
                <Form/>
                <View style = {styles.signupTextCont}>
-                   <Text>Sign up</Text>
+                 <View style={styles.buttonContainer}>
+                 <Button
+                 onPress={this._onPressButton}
+                 title="Sign Up"
+                 />
+                 </View>
                </View>
             </View>
         );
@@ -31,6 +36,10 @@ const styles = StyleSheet.create({
     {
         flexGrow: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        margin: 20
+    },
+    buttonContainer: {
+        margin: 20
     }
   });
