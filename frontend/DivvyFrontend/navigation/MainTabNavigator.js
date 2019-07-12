@@ -16,6 +16,26 @@ const config = Platform.select({
   default: {},
 });
 
+//tmp
+const GroupDetailsStack = createStackNavigator(
+  {
+    GroupDetails: GroupDetailsScreen,
+  },
+  config
+);
+
+GroupDetailsStack.navigationOptions = {
+  tabBarLabel: "Group Details",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={ 'ios-car' }
+    />
+  ),
+};
+
+GroupDetailsStack.path = '';
+//endtmp
 const MyRideStack = createStackNavigator(
   {
     MyRide: MyRideScreen,
@@ -115,6 +135,8 @@ const tabNavigator = createBottomTabNavigator({
 	// HomeStack,
 	MyRideStack,
 	GroupsStack,
+	// LinksStack,
+	// GroupDetailsStack,
 	SettingsStack,
   SearchStack
 
