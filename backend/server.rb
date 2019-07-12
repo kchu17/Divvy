@@ -1,7 +1,11 @@
+#!/usr/bin/ruby
+
 require 'sinatra'
 require 'json'
 
 set :show_exceptions, false
+set :host, `hostname -i` # allows everyone to connect
+
 
 error do
 	warn "Internal error: #{$!}"
