@@ -9,6 +9,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import SearchScreen from '../screens/SearchScreen';
 import MyRideScreen from "../screens/MyRideScreen";
 import SearchForGroup from "../components/hacks/SearchForGroup"
+import GroupDetailsScreen from "../screens/GroupDetailsScreen";
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -46,7 +47,7 @@ SearchStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={ 'md-information-circle' }
+      name={ 'ios-search' }
     />
   ),
 };
@@ -76,22 +77,23 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = '';
 
-const LinksStack = createStackNavigator(
+const GroupsStack = createStackNavigator(
   {
-    Links: LinksScreen,
+    Groups: GroupDetailsScreen,
   },
   config
 );
 
-LinksStack.navigationOptions = {
+GroupsStack.navigationOptions = {
   // tabBarLabel: 'Links',
   tabBarLabel: "Groups",
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+    // <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-groups' :'md-groups'} />
+    <TabBarIcon focused={focused} name={'ios-contact'}/>
   ),
 };
 
-LinksStack.path = '';
+GroupsStack.path = '';
 
 const SettingsStack = createStackNavigator(
   {
@@ -112,7 +114,7 @@ SettingsStack.path = '';
 const tabNavigator = createBottomTabNavigator({
 	// HomeStack,
 	MyRideStack,
-	LinksStack,
+	GroupsStack,
 	SettingsStack,
   SearchStack
 
