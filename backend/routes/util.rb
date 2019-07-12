@@ -8,3 +8,4 @@ end
 
 GROUP_DOESNT_EXIST = [404, {ok: false, cause: "Group doesn't exist"}.to_json]
 USER_DOESNT_EXIST = [404, {ok: false, cause: "User doesn't exist"}.to_json]
+RIDE_DOESNT_EXIST = [404, {ok: false, cause: "Ride doesn't exist"}.to_json]
