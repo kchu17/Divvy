@@ -9,7 +9,6 @@ export class Person extends Component {
 	}
 
 	render() {
-		console.log(this.props);
 		return (
 			<TouchableOpacity
 				style={this.props.isMe ? styles.meWrapper : styles.personWrapper}
