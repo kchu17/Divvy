@@ -17,7 +17,7 @@ export default class Login extends Component
                  <View style={styles.buttonContainer}>
                  <Button
                  onPress={this._onPressButton}
-                 title="Sign Up"
+                 title="Login"
                  />
                  </View>
                </View>

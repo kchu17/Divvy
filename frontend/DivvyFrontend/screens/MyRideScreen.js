@@ -73,7 +73,7 @@ export default class MyRideScreen extends Component {
 								{ key: "Sam", pickedUp: false, isMe: false }
 							]}
 							renderItem={({item}) => (
-								<Person name={item.key} pickedUp={item.pickedUp} isMe={item.isMe}/>
+								<Person name={item.key} pickedUp={item.pickedUp} isMe={item.isMe} showArrow={false}/>
 							)}
 						/>
 					</View>
