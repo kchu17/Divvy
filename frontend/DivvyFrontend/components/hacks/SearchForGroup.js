@@ -11,7 +11,7 @@ import { Person, Ride } from "../Touchables";
 import { AntDesign } from '@expo/vector-icons';
 
 const axios = require("axios");
-const DB_URL = "http://ec2-18-219-137-171.us-east-2.compute.amazonaws.com:4567";
+import { DB_URL } from "./url_key";
 
 
 function alertOrDetails(props) {
