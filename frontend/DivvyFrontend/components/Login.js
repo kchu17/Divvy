@@ -5,11 +5,13 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 import Logo from './Logo';
 import Form from './Form';
 import Schedule from './Schedule';
+import MyRide from '../MyRide.js'
 
 export default class Login extends Component 
 {
     render()
     {
+      console.log(this.props);
         return(
             <View styles = {styles.container}>
                <Logo/>
@@ -17,7 +19,7 @@ export default class Login extends Component
                <View style = {styles.signupTextCont}>
                  <View style={styles.buttonContainer}>
                  <Button
-                 onPress={() => this.props.navigation.navigate('Schedule')}
+                 onPress={() => this.props.navigation.replace('MyRide')}
                  title="Log In"
                  />
                  </View>
