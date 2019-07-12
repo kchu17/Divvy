@@ -1,3 +1,11 @@
+DAEMONIZE = $*[0] == '--daemonize' and $*.shift # to delete it
+
+if DAEMONIZE
+	pid = fork and abort "Daemonized. child's pid: #{pid}"
+	system 'mkdir logs' unless File::directory? 'logs'
+	$stderr = $stdin = open "logs/#{Time.now}", 'w+'
+end
+
 require 'sinatra'
 require 'json'
 

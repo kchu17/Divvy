@@ -43,3 +43,5 @@ module_function
 		JSON.parse raw = `curl -s -X#{meth} #{header} #{data} #{URL}/#{endpoint}`
 	end
 end
+
+# p Database::curl 'rides', 'PUT'
