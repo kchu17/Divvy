@@ -1,13 +1,13 @@
-__END__
 require 'uri'
 require 'json'
+require_relative '../group'
 
-API_KEY = 'AIzaSyAxk8cjmtF9oJUngRMLKxsovb02XEwrEo4'
+API_KEY = open('api_key', &:read).trim
 BASE_URL = 'https://maps.googleapis.com/maps/api/distancematrix/json'
 
 class Object
 	def to_uri_params
-		URI::encode to_s
+		to_s
 	end
 end
 
@@ -23,26 +23,24 @@ class Hash
 	end
 end
 
+# 	units: 'imperial',
+# 	origins: [[37.275167,-121.891223]], #mexico lindo
+# 	key: API_KEY,
+# 	destinations: [
+# 		[37.335240,-121.892711], # nick the greek
+# 		[37.308648,-121.900458], # willow street pizza
+# 	],
 
-args = {
-	units: 'imperial',
-	origins: [37.275167,-121.891223], #mexico lindo
-	key: API_KEY,
-	destinations: [
-		[37.335240,-121.892711], # nick the greek
-		[37.308648,-121.900458], # willow street pizza
-	],
+# 	arrival_time: (Time.now + 21*60*60).to_i
+# }
 
-	arrival_time: (Time.now + 21*60*60).to_i
-}
-
-def get_url args
-	BASE_URL + '?' + args.to_uri_params
-end
+# def get_url args
+# 	BASE_URL + '?' + args.to_uri_params
+# end
 
 
-p get_url args
-puts `curl -s '#{get_url args}'`
+# p get_url args
+# puts `curl -s '#{get_url args}'`
 __END__
 
 https://maps.googleapis.com/maps/api/distancematrix/json?parameters?

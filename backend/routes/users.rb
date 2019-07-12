@@ -1,44 +1,43 @@
-require_relative '../user'
+require_relative 'util'
+require_relative '../classes/user'
 require 'sinatra'
 require 'sinatra/json'
 
-get '/user/:id' do
-	user = User::get(params['id']) or return status 404
-	json user
+def sanitize_user user
+	user = user.to_h
+	user['sanitized'] = true;
+	# user.delete 'password'
+	# user.delete 'salt'
+	user
 end
 
-post '/user' do 
-	begin
-		data = JSON.parse(raw = request.body.read) or fail JSON::ParserError # just to break into rescue
-	rescue JSON::ParserError
-		status 400
-		return json ok: false, cause: 'Bad Body', raw: raw
-	end
+get '/users/:id' do
+	user = User::from_id(params['id']) or return USER_DOESNT_EXIST
+	json sanitize_user user
+end
 
-	result = User::post data
-	status 201
-	json result
+get '/users/username/:username' do
+	user = User::from_username(params['username']) or return USER_DOESNT_EXIST
+	json sanitize_user user
 end
 
 
-put '/user/:id' do 
-	begin
-		updates = JSON.parse(raw = request.body.read) or fail JSON::ParserError # just to break into rescue
-	rescue JSON::ParserError
-		status 400
-		return json ok: false, cause: 'Bad Body', raw: raw
-	end
+put '/users/:id' do 
+	user = User::from_id(params['id']) or return USER_DOESNT_EXIST
 
-	User::put params['id'], updates
+	data = parse_body(request.body.read){ |err| return err }
+	
+	user.update! data or return
 
 	status 200
-	body 'Updated'
+	json ok: true
 end
 
 
-delete '/user/:id' do
-	User::delete params['id']
+delete '/users/:id' do
+	user = User::from_id(params['id']) or return USER_DOESNT_EXIST
+	user.delete! or return
 
 	status 200
-	body 'Deleted'
+	json ok: true
 end

@@ -2,7 +2,7 @@ require 'sinatra'
 require 'sinatra/json'
 
 require_relative 'database'
-require_relative 'user'
+require_relative 'classes/user'
 
 module Group
 module_function
@@ -20,6 +20,10 @@ module_function
 		group.delete '_rev'
 
 		group
+	end
+
+	def find body
+		Database::curl(GROUPS + '/_find', Database::POST, body)['docs']
 	end
 
 	def post data
@@ -40,7 +44,7 @@ module_function
 	end
 
 	def delete id
-		result = Database::delete GROUP, params['id']
+		result = Database::delete GROUP, id
 		puts "[LOG] Group deleted. result=#{result}, id=#{id}" if $DEBUG
 		true
 	end

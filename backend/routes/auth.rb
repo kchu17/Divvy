@@ -1,16 +1,11 @@
 require 'sinatra'
 require 'sinatra/json'
 require 'digest'
-require_relative '../user'
-
+require_relative '../classes/user'
+require_relative 'util'
 enable :sessions
 
 USER_ID = :user_id
-class String
-	def hash_password salt
-		Digest::SHA2.hexdigest salt + '$' + self
-	end
-end
 
 # def validate_user_params params
 # 	return {
@@ -28,63 +23,52 @@ get '/auth' do
 end
 
 post '/auth/login' do
-	halt 400, 'Already logged in' if session.include? USER_ID
+	return [400, {ok: false, cause: 'Already logged in'}.to_json] if session.include? USER_ID
 
-	begin
-		body = JSON.parse(raw = request.body.read) or fail JSON::ParserError # just to break into rescue
-	rescue JSON::ParserError
+	data = parse_body(request.body.read){ |err| return err }
+
+	username = data['username']&.to_s or halt 400, "'username' required"
+	password = data['password']&.to_s or halt 400, "'password' required"
+
+	user = User::from_username username
+
+	if !user || user['password'] != password.hash_password(user['salt'])
 		status 400
-		return json ok: false, cause: 'Bad Body', raw: raw
+		return json ok: false, cause: "Bad Credentials"
 	end
 
-	username = body['username']&.to_s or halt 400, 'Username required'
-	password = body['password']&.to_s or halt 400, 'Password required'
-
-	users = User::find({ selector: { username: 'sam' }, fields: ['password', 'salt', '_id']})
-		.select{|user| user['password'] == password.hash_password(user['salt']) }
-
-	return [400, {ok: false, cause: "Bad Credentials"}.to_json] if users.empty?
-	warn "Multiple users found, using the first one. username=#{username}, users=#{users}" if users.length > 1
-
-	session[USER_ID] = users.first['_id']
+	session[USER_ID] = user.id
 
 	status 200
-	body 'Logged in'
+	json ok: true
 end
 
 post '/auth/register' do
-	begin
-		body = JSON.parse(raw = request.body.read) or fail JSON::ParserError # just to break into rescue
-	rescue JSON::ParserError
+	data = parse_body(request.body.read){ |err| return err }
+
+	username = data['username']&.to_s or halt 400, "'username' required"
+	password = data['password']&.to_s or halt 400, "'password' required"
+
+	if User::username_exists? username
 		status 400
-		return json ok: false, cause: 'Bad Body', raw: raw
+		return json ok: false, cause: "'username' already exists", username: username
 	end
 
-	username = body['username']&.to_s or halt 400, 'Username required'
-	password = body['password']&.to_s or halt 400, 'Password required'
+	salt, password = password.salt_password
 
-	if User::exist? username
-		status 400
-		return json ok: false, cause: "Username already exists", username: username
-	end
+	user = data.clone
+	user.update username: username, password: password, salt: salt
 
-	salt = rand(0xffff).to_s # generate a two-byte salt
-
-	user = params.clone.update(
-		username: username,
-		password: password.hash_password(salt),
-		salt: salt
-	)
-
-	id = User::post(user)['id']
+	id = User::create(user).id
 	session[USER_ID] = id
 
-	status 200
+	status 201
 	json ok: true, id: id
 end
 
 get '/auth/logout' do
+	return [200, {ok: true, comment: "You werent logged in"}.to_json] unless session.include? USER_ID
 	session.delete USER_ID
 	status 200
-	body 'Logged out'
+	json ok: true
 end
