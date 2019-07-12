@@ -41,3 +41,4 @@ EOF
 
 # echo "    Checking to see if Redis is working... This should output PONG:"
 # redis-cli ping
+
