@@ -15,8 +15,8 @@ const DB_URL = "http://ec2-18-219-137-171.us-east-2.compute.amazonaws.com:4567";
 
 
 function alertOrDetails(props) {
-  if (true) {
-    Alert.alert('Group join Request Sent', `${props.src} -> ${props.dst}, arrive at ${props.arrival}`,
+  if (false) {
+    Alert.alert('Group Join Request Sent', `${props.src} -> ${props.dst}, arrive at ${props.arrival}`,
       [
         {text: 'OK', onPress: () => console.log('OK Pressed')},
       ],
