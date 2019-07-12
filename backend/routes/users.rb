@@ -18,8 +18,8 @@ get '/users/:id' do
 end
 
 get '/users/:id/find_groups' do
-	groups = Group::list_all or return
-	json groups: groups
+	groups = Group::list_all or return json { ok: false }
+	json {ok: true, groups: groups}
 end
 
 
