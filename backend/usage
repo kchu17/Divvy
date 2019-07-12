@@ -1,4 +1,6 @@
-GET /user/USER_ID						returns the user or a 404 error
+GET /user/USER_ID						returns the user associated with the id or a 404 error
+GET /users/username/USERNAME			returns the user associated with the username or a 404 error
+
 GET /group/GROUP_ID						returns the group or a 404 error
 POST /user 				BODY: JSON		creates a new user, returning {"id": "USER_ID", "ok": true} or an error
 POST /group				BODY: JSON		creates a new group, returning {"id": "GROUP_ID", "ok": true} or an error
