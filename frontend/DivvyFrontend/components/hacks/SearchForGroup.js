@@ -21,6 +21,7 @@ function SearchGroup(props) {
         flexDirection: 'row',
         ...(props.isMe ? searchGroupStyles.meWrapper : searchGroupStyles.personWrapper)
       }}
+      onPress={() => console.log('clicked!')}
     >
       <View style={{flex: 1}}>
         <LText style={searchGroupStyles.nameText}>From</LText>
