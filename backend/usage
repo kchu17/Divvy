@@ -1,4 +1,4 @@
-GET /user/USER_ID						returns the user associated with the id or a 404 error
+GET /users/USER_ID						returns the user associated with the id or a 404 error
 GET /users/username/USERNAME			returns the user associated with the username or a 404 error
 
 GET /group/GROUP_ID						returns the group or a 404 error
