@@ -8,13 +8,12 @@ cat <<'EOF' >> ~/.bashrc
 crl () 
 {
     if [ $1 = "GET" ]; then
-        curl -s "$CRL_BASE_URL/$2";
+        curl -s "$2";
     else
-        curl -s -X $1 -H "Content-type: application/json" -d "$3" "$CRL_BASE_URL/$2";
+        curl -s -X $1 -H "Content-type: application/json" -d "$3" "$2";
     fi
 }
 EOF
-echo "export CRL_BASE_URL='localhost:4567' # set the \$CRL_BASE_URL variable" >> ~/.bashrc
 echo '-w "\n"' >> ~/.curlc
 source ~/.bashrc
 
