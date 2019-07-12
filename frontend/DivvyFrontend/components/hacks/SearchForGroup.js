@@ -64,7 +64,7 @@ export default class SearchForGroup extends Component {
     const header = (
       <View style={styles.header}>
 
-        <BXXLText style={styles.headerText}>{'\n'}Searching for '{ this.state.searchQuery }'</BXXLText>
+        <BXXLText style={styles.headerText}>Searching for '{ this.state.searchQuery }'</BXXLText>
       </View>
     );
 

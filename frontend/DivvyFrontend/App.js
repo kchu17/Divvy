@@ -8,12 +8,13 @@ import SearchForGroup from './components/hacks/SearchForGroup';
 import GroupDetailsScreen from './screens/GroupDetailsScreen';
 
 const AppNavigator = createStackNavigator({
-  Home: { screen: AuthHomepage},
+  Home: {screen: AuthHomepage},
   PostAuthHomepage: { screen: MyRide },
   Login: { screen: Login },
   SignUp: { screen: SignUp },
   MyRide: { screen: MyRide },
-  SearchForGroup: { screen: SearchForGroup}
+  SearchForGroup: { screen: SearchForGroup},
+  GroupDetailsScreen: {screen: GroupDetailsScreen}
 });
 
 export default createAppContainer(AppNavigator);

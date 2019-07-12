@@ -19,11 +19,12 @@ export default function Homepage({ navigation }) {
     <View style={styles.container}>
      <Logo/>
       <View style={styles.buttonContainer}>
-        {<Button onPress={() => navigation.navigate('SignUp')} title="Sign Up"/>}
+        {<Button onPress={() => navigation.navigate('SignUp')} 
+        title="Sign Up"/>}
       </View>
       <View style={styles.buttonContainer}>
         <Button
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => navigation.navigate('Login')} 
           title="Login"
           color="#841584"
         />

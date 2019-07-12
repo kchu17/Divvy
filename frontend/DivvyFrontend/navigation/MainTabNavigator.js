@@ -38,6 +38,7 @@ MyRideStack.path = '';
 const SearchStack = createStackNavigator(
   {
     Search: SearchForGroup,
+    GroupDetailsScreen: {screen: GroupDetailsScreen}
   },
   config
 );
