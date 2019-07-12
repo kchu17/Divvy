@@ -1,13 +1,13 @@
 GET /users/USER_ID						returns the user associated with the id or a 404 error
 GET /users/username/USERNAME			returns the user associated with the username or a 404 error
 
-GET /group/GROUP_ID						returns the group or a 404 error
-POST /user 				BODY: JSON		creates a new user, returning {"id": "USER_ID", "ok": true} or an error
-POST /group				BODY: JSON		creates a new group, returning {"id": "GROUP_ID", "ok": true} or an error
-PUT /user/USER_ID		BODY: JSON		updates a user and returns status 200 for success or a 400/500 code for failure
-PUT /group/GROUP_ID		BODY: JSON		updates a group and returns status 200 for success or a 400/500 code for failure
-DELETE /user/USER_ID					deletes a user, returning status 200 for success or 400/500 for failure
-DELETE /group/GROUP_ID					deletes a group, returning status 200 for success or 400/500 for failure
+GET /groups/GROUP_ID					returns the group or a 404 error
+POST /users 			BODY: JSON		creates a new user, returning {"id": "USER_ID", "ok": true} or an error
+POST /groups			BODY: JSON		creates a new group, returning {"id": "GROUP_ID", "ok": true} or an error
+PUT /users/USER_ID		BODY: JSON		updates a user and returns status 200 for success or a 400/500 code for failure
+PUT /groups/GROUP_ID	BODY: JSON		updates a group and returns status 200 for success or a 400/500 code for failure
+DELETE /users/USER_ID					deletes a user, returning status 200 for success or 400/500 for failure
+DELETE /groups/GROUP_ID					deletes a group, returning status 200 for success or 400/500 for failure
 
 POST /auth/login		BODY: JSON		attempts to login to a user account
 POST /auth/register		BODY: JSON		attempts to register a user
