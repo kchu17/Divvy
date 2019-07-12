@@ -28,4 +28,4 @@ class Ride < Document
 		puts "[LOG] Removed user from ride. user.id=#{user.id}, ride.id=#{ride.id}" if $DEBUG
 		true
 	end
-endend
+end
