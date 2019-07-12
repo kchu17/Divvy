@@ -60,3 +60,69 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+// import React from "react";
+// import { View, Text, StyleSheet, Button} from "react-native";
+// import { createStackNavigator, createAppContainer } from "react-navigation";
+// import SignUp from './Components/SignUp';
+// import Login from './Components/Login';
+// import Logo from './Components/Logo';
+
+
+// const styles = StyleSheet.create({
+//   container: {
+//    flex: 1,
+//    justifyContent: 'center',
+//   },
+//   buttonContainer: {
+//     margin: 20
+//   },
+//   alternativeLayoutButtonContainer: {
+//     margin: 20,
+//     flexDirection: 'row',
+//     justifyContent: 'space-between'
+//   }
+// });
+
+// // AppRegistry.registerComponent('App', () => App);
+
+// class HomeScreen extends React.Component {
+//   render() {
+//     return (
+//       <View style={styles.container}>
+//         <Logo/>
+//         <View style={styles.buttonContainer}>
+//           <Button
+//             onPress={() => this.props.navigation.navigate('SignUp')}
+//             title="Sign Up"
+//           />
+//         </View>
+//         <View style={styles.buttonContainer}>
+//           <Button
+
+//             onPress={() => this.props.navigation.navigate('Login')}
+//             title="Login"
+//             color="#841584"
+//           />
+//         </View>
+//       </View>
+//     );
+//   }
+// }
+
+
+// //Add to navigation
+// const AppNavigator = createStackNavigator({
+//   Home: {
+//     screen: HomeScreen
+//   },
+//   Login: {
+//     screen: Login
+//   },
+//   SignUp: {
+//     screen: SignUp
+//   }
+
+// });
+
+// export default createAppContainer(AppNavigator);
