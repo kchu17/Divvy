@@ -1,3 +1,3 @@
 # Divvy
 
-Divvy --- an app for carpooling at ibm
+Divvy --- an app for carpooling

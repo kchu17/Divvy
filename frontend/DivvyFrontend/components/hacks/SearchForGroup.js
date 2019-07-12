@@ -17,10 +17,8 @@ const DB_URL = "http://ec2-18-219-137-171.us-east-2.compute.amazonaws.com:4567";
 function SearchGroup(props) {
   return (
     <TouchableOpacity
-      style={{
-        flexDirection: 'row',
-        ...(props.isMe ? searchGroupStyles.meWrapper : searchGroupStyles.personWrapper)
-      }}
+      style={{flexDirection: 'row', ...searchGroupStyles.personWrapper}}
+      onPress={() => props.navigation.navigate('GroupDetailsScreen')}
     >
       <View style={{flex: 1}}>
         <LText style={searchGroupStyles.nameText}>From</LText>
@@ -84,7 +82,7 @@ export default class SearchForGroup extends Component {
                 { id: 3, dst: "IBM—SVL", src: "Willow Glen, San Jose", arrival: "9:30 am" }
               ]}
               renderItem={({item}) => (
-                <SearchGroup key={item.id} {...item}/>
+                <SearchGroup key={item.id} {...item} navigation={this.props.navigation}/>
               )}
             />
           </View>
